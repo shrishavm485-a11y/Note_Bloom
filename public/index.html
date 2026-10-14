@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoteBloom</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<nav class="nav" aria-label="Main">
+  <div class="logo">🌸 <b>NoteBloom</b></div>
+  <button data-view="home" class="on">🏠<span>Home</span></button>
+  <button data-view="create">✨<span>Create</span></button>
+  <button data-view="notes">📒<span>Notes</span></button>
+  <button data-view="settings">⚙️<span>Settings</span></button>
+</nav>
+<main>
+<section id="v-home" class="view">
+  <h1>Messy thoughts, beautiful notes.</h1>
+  <p class="muted" id="greet"></p>
+  <div class="card yellow">
+    <label for="homeText"><b>Paste anything. Even messy text works.</b></label>
+    <textarea id="homeText" rows="5" placeholder="Paste class notes, textbook text, or rough ideas here..."></textarea>
+    <button class="btn big" id="homeGo">Create Beautiful Notes</button>
+  </div>
+  <div class="grid2">
+    <div class="card mint"><b id="count">0</b> saved notes<br><button class="btn small" id="daily">New daily note</button></div>
+    <div class="card peach"><b>Today's nudge</b><p id="quote" class="muted"></p></div>
+  </div>
+  <h2>Recently edited</h2><div id="recent" class="list"></div>
+  <h2>Favorites</h2><div id="favs" class="list"></div>
+</section>
+
+<section id="v-create" class="view" hidden>
+  <h1>Create notes</h1>
+  <div class="card">
+    <div class="row">
+      <input id="title" placeholder="Title (optional)" aria-label="Title">
+      <input id="subject" placeholder="Subject" aria-label="Subject">
+      <input id="topic" placeholder="Topic" aria-label="Topic">
+    </div>
+    <textarea id="input" rows="9" aria-label="Your text" placeholder="Paste or type here. Messy, unpunctuated, copied from a textbook: all fine."></textarea>
+    <div class="row between"><span class="muted" id="stats"></span>
+      <span class="row">
+        <button class="btn small" id="sample">Sample</button>
+        <button class="btn small" id="paste">Paste</button>
+        <button class="btn small" id="importTxt">Import .txt/.md</button>
+        <button class="btn small" id="clear">Clear</button>
+        <input type="file" id="file" accept=".txt,.md,text/plain,text/markdown" hidden>
+      </span></div>
+  </div>
+  <div class="card lav">
+    <div class="row">
+      <label>Style <select id="style">
+        <option value="aesthetic">Aesthetic Study Notes</option><option value="minimal">Minimal Notes</option>
+        <option value="colorful">Colorful Notes</option><option value="cornell">Cornell Notes</option>
+        <option value="exam">Exam Preparation</option><option value="flash">Flashcard Format</option></select></label>
+      <label>Layout <select id="layout"><option>comfortable</option><option>compact</option><option>spacious</option></select></label>
+      <label>Text size <select id="fsize"><option value="16">Normal</option><option value="14">Small</option><option value="19">Large</option></select></label>
+    </div>
+    <div class="row">
+      <label><input type="checkbox" id="emoji" checked> Emojis</label>
+      <label><input type="checkbox" id="summary" checked> Summary</label>
+      <label><input type="checkbox" id="takeaways" checked> Key takeaways</label>
+    </div>
+    <button class="btn big" id="beautify">✨ Beautify My Notes</button>
+  </div>
+
+  <div id="out" hidden>
+    <div class="row between sticky">
+      <span class="row"><button class="tab on" data-t="preview">Preview</button><button class="tab" data-t="source">Edit (Markdown)</button></span>
+      <span id="saveState" class="pill" role="status">Not saved</span>
+    </div>
+    <div class="row tools">
+      <button class="btn small" id="save">💾 Save</button>
+      <button class="btn small" id="undo">↶ Undo</button><button class="btn small" id="redo">↷ Redo</button>
+      <button class="btn small" id="copyRich">Copy</button><button class="btn small" id="copyPlain">Copy plain</button>
+      <button class="btn small" id="dlTxt">.txt</button><button class="btn small" id="dlMd">.md</button>
+      <button class="btn small" id="dlHtml">.html</button><button class="btn small" id="print">Print / PDF</button>
+      <button class="btn small" id="restore">Restore original</button>
+    </div>
+    <article id="preview" class="doc"></article>
+    <textarea id="source" rows="18" hidden aria-label="Markdown source"></textarea>
+  </div>
+</section>
+
+<section id="v-notes" class="view" hidden>
+  <h1>All notes</h1>
+  <div class="row">
+    <input id="q" type="search" placeholder="Search title or content" aria-label="Search">
+    <select id="fFolder" aria-label="Folder"></select>
+    <select id="sort" aria-label="Sort"><option value="updated">Recently edited</option><option value="created">Recently created</option><option value="oldest">Oldest first</option><option value="alpha">A to Z</option></select>
+    <label><input type="checkbox" id="onlyFav"> Favorites</label>
+  </div>
+  <div id="noteList" class="list"></div>
+</section>
+
+<section id="v-settings" class="view" hidden>
+  <h1>Settings</h1>
+  <div class="card"><label><input type="checkbox" id="dark"> Dark mode</label></div>
+  <div class="card mint"><b>Where are my notes?</b><p>Guest mode: notes live only in this browser. They do not sync to other devices. Export a JSON backup to move or protect them.</p>
+    <div class="row"><button class="btn small" id="expAll">Export JSON backup</button><button class="btn small" id="impAll">Import JSON backup</button><input type="file" id="jsonFile" accept=".json,application/json" hidden></div></div>
+  <div class="card"><b>Folders</b><div id="folderList"></div><div class="row"><input id="newFolder" placeholder="New folder name" aria-label="New folder name"><button class="btn small" id="addFolder">Add folder</button></div></div>
+</section>
+</main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
