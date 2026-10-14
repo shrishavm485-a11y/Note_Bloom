@@ -1,0 +1,10 @@
+{
+  "name": "CyberLab Journal",
+  "short_name": "CyberLab",
+  "description": "Personal cybersecurity and cloud security learning workspace",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080A0D",
+  "theme_color": "#080A0D",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

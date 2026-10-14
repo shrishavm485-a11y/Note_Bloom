@@ -1,0 +1,29 @@
+{
+  "name": "cyberlab-journal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CyberLab Journal - personal cybersecurity & cloud security learning workspace (Phase 1 MVP)",
+  "type": "module",
+  "engines": { "node": ">=18.18" },
+  "scripts": {
+    "dev": "concurrently -n api,web -c green,cyan \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "node --watch server/index.js",
+    "dev:client": "vite --config client/vite.config.js",
+    "build": "vite build --config client/vite.config.js",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.17",
+    "@vitejs/plugin-react": "^4.3.4",
+    "express": "^4.21.2",
+    "lucide-react": "^0.453.0",
+    "pg": "^8.13.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "vite": "^5.4.11"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
