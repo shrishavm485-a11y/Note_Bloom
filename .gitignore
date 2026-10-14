@@ -1,6 +1,20 @@
+<<<<<<< HEAD
 @"
 node_modules/
 .env
 .env.*
 !.env.example
 "@ | Out-File -Encoding utf8 .gitignore
+=======
+node_modules/
+dist/
+.data/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+>>>>>>> c01fe6fdfbe8e830a72d26581211e2bd3fd5995f
